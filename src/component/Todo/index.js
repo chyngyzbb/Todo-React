@@ -1,35 +1,45 @@
 import React, { useEffect, useState } from "react";
-import uniqId from "uniqid";
 import TodoList from "../TodoList";
+import axios from "axios";
 
 const Todo = () => {
   const [value, setValue] = useState("");
   const [todos, setTodos] = useState([]);
 
+  const getAllTasks = async () => {
+    try {
+      //   const response = await fetch(
+      //   "https://6765634852b2a7619f5f643f.mockapi.io/Task"
+      // );
+      // const data = await response.json();
+      const response = await axios(
+        `https://6765634852b2a7619f5f643f.mockapi.io/Task`
+      );
+      setTodos(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
-  const getAllTasks = async () => {
-    const response = await fetch(
-      "https://6765634852b2a7619f5f643f.mockapi.io/Task"
-    );
-    const data = await response.json();
-    setTodos(data);
-  };
-
   const handleClick = async () => {
-    const newTodo = {
-      title: value,
-    };
+    // const newTodo = {
+    //   title: value,
+    // };
     // setTodos([...todos,newTodo])
     try {
-      await fetch("https://6765634852b2a7619f5f643f.mockapi.io/Task", {
-        methot: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTodo),
+      // await fetch("https://6765634852b2a7619f5f643f.mockapi.io/Task", {
+      //   methot: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(newTodo),
+      // });
+      await axios.post(`https://6765634852b2a7619f5f643f.mockapi.io/Task`, {
+        title: value,
       });
       getAllTasks();
     } catch (e) {
@@ -40,9 +50,12 @@ const Todo = () => {
   const deleteTodo = async (id) => {
     // setTodos(todos.filter(el=>el.id!==id))
     try {
-      await fetch("https://6765634852b2a7619f5f643f.mockapi.io/Task/" + id, {
-        methot: "DELETE",
-      });
+      // await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/` + id, {
+      //   methot: "DELETE",
+      // });
+      await axios.delete(
+        `https://6765634852b2a7619f5f643f.mockapi.io/Task/` + id
+      );
       getAllTasks();
     } catch (e) {
       console.log(e);
@@ -52,17 +65,21 @@ const Todo = () => {
   const updateTodo = async (id, newTitle) => {
     // setTodos(
     //     todos.map((el)=>(el.id===id?{...el,title:newTitle}:el)))
-    const upDateTodo = {
-      title: newTitle,
-    };
+    // const upDateTodo = {
+    //   title: newTitle,
+    // };
     try {
-      await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`, {
-        methot: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(upDateTodo),
-      });
+      // await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`, {
+      //   methot: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(upDateTodo),
+      // });
+      await axios.put(
+        `https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`,
+        { title: newTitle }
+      );
       getAllTasks();
     } catch (e) {
       console.log(e);
@@ -74,17 +91,21 @@ const Todo = () => {
     //     todos.map((el)=>(el.id===id?{...el,isDone: !el.isDone}:el))
     // )
     const found = todos.find((el) => el.id === id);
-    const updateStatus = {
-      isDone: !found.isDone,
-    };
+    // const updateStatus = {
+    //   isDone: !found.isDone,
+    // };
     try {
-      await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`, {
-        methot: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updateStatus),
-      });
+      // await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`, {
+      //   methot: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(updateStatus),
+      // });
+      await axios.put(
+        `https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`,
+        { isDone: !found.isDone }
+      );
       getAllTasks();
     } catch (e) {
       console.log(e);

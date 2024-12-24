@@ -1,10 +1,12 @@
 import React from 'react';
-import Todo from './component/Todo';
+import Contacts from './component/Contacts';
+// import Todo from './component/Todo';
 
 const App = () => {
   return (
     <div>
-      <Todo/>
+      {/* <Todo/> */}
+      <Contacts/>
     </div>
   );
 };
