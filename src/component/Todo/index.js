@@ -5,6 +5,7 @@ import axios from "axios";
 const Todo = () => {
   const [value, setValue] = useState("");
   const [todos, setTodos] = useState([]);
+  const API = "http://localhost:8080";
 
   const getAllTasks = async () => {
     try {
@@ -12,9 +13,7 @@ const Todo = () => {
       //   "https://6765634852b2a7619f5f643f.mockapi.io/Task"
       // );
       // const data = await response.json();
-      const response = await axios(
-        `https://6765634852b2a7619f5f643f.mockapi.io/Task`
-      );
+      const response = await axios(API + "/users");
       setTodos(response.data);
     } catch (e) {
       console.log(e);
@@ -38,7 +37,14 @@ const Todo = () => {
       //   },
       //   body: JSON.stringify(newTodo),
       // });
-      await axios.post(`https://6765634852b2a7619f5f643f.mockapi.io/Task`, {
+      //  await fetch(API, {
+      //   methot: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(value),
+      // });
+      await axios.post(API + "/user", {
         title: value,
       });
       getAllTasks();
@@ -53,9 +59,7 @@ const Todo = () => {
       // await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/` + id, {
       //   methot: "DELETE",
       // });
-      await axios.delete(
-        `https://6765634852b2a7619f5f643f.mockapi.io/Task/` + id
-      );
+      await axios.delete(`${API}/user/${id}`);
       getAllTasks();
     } catch (e) {
       console.log(e);
@@ -76,10 +80,7 @@ const Todo = () => {
       //   },
       //   body: JSON.stringify(upDateTodo),
       // });
-      await axios.put(
-        `https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`,
-        { title: newTitle }
-      );
+      await axios.put(`${API}/user/${id}`, { title: newTitle });
       getAllTasks();
     } catch (e) {
       console.log(e);
@@ -140,11 +141,11 @@ const Todo = () => {
         .filter((el) => !el.isDone)
         .map((el) => (
           <TodoList
-            updateStatus={updateStatus}
-            updateTodo={updateTodo}
             el={el}
-            key={el.id}
             deleteTodo={deleteTodo}
+            updateTodo={updateTodo}
+            updateStatus={updateStatus}
+            key={el.id}
           />
         ))}
       <h1 className="text-center mt-6">Законченные дела:</h1>

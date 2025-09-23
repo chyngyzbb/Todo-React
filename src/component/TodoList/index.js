@@ -15,6 +15,7 @@ const TodoList = ({ el, deleteTodo, updateTodo, updateStatus }) => {
     updateTodo(id, newTitle);
     setEdit(false);
   };
+// console.log(newValue);
 
   return (
     <div className="w-[500px] bg-amber-400 py-4 px-3 mx-auto rounded-1 ">
@@ -28,7 +29,7 @@ const TodoList = ({ el, deleteTodo, updateTodo, updateStatus }) => {
           {edit ? (
             <input
               className="py-2 px-2 rounded outline-none"
-              onChange={handleChangeNew}
+              onChange={(e)=>handleChangeNew(e)}
               defaultValue={el.title}
               type="text"
             />
@@ -41,7 +42,7 @@ const TodoList = ({ el, deleteTodo, updateTodo, updateStatus }) => {
           <button
             onClick={() => (edit ? closeInput(el.id, newValue) : openInput())}
             type="button"
-            class="focus:outline-none pl-3  text-white bg-yellow-400 hover:bg-yellow-500  rounded-lg h-10  px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+            className="focus:outline-none pl-3  text-white bg-yellow-400 hover:bg-yellow-500  rounded-lg h-10  px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
             {edit ? "save" : "edit"}
           </button>
