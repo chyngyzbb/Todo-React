@@ -23,7 +23,7 @@ const TodoList = ({ el, deleteTodo, updateTodo, updateStatus }) => {
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
-            defaultChecked={el.isDone}
+            defaultChecked={el.done}
             onClick={() => updateStatus(el.id)}
           />
           {edit ? (

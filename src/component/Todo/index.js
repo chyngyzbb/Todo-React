@@ -67,6 +67,9 @@ const Todo = () => {
   };
 
   const updateTodo = async (id, newTitle) => {
+    const found = todos.find((el) => el.id === id);
+    const res={...found,title:newTitle}
+
     // setTodos(
     //     todos.map((el)=>(el.id===id?{...el,title:newTitle}:el)))
     // const upDateTodo = {
@@ -80,8 +83,8 @@ const Todo = () => {
       //   },
       //   body: JSON.stringify(upDateTodo),
       // });
-      await axios.put(`${API}/user/${id}`, { title: newTitle });
-      getAllTasks();
+      await axios.put(`${API}/user/${id}`,res);
+       getAllTasks();
     } catch (e) {
       console.log(e);
     }
@@ -92,9 +95,14 @@ const Todo = () => {
     //     todos.map((el)=>(el.id===id?{...el,isDone: !el.isDone}:el))
     // )
     const found = todos.find((el) => el.id === id);
+        
+    const res={...found,done: !found.done}
     // const updateStatus = {
     //   isDone: !found.isDone,
     // };
+    console.log(found);
+    console.log(res);
+    
     try {
       // await fetch(`https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`, {
       //   methot: "PUT",
@@ -103,11 +111,8 @@ const Todo = () => {
       //   },
       //   body: JSON.stringify(updateStatus),
       // });
-      await axios.put(
-        `https://6765634852b2a7619f5f643f.mockapi.io/Task/${id}`,
-        { isDone: !found.isDone }
-      );
-      getAllTasks();
+      await axios.put(`${API}/user/${id}`,res);
+       getAllTasks();
     } catch (e) {
       console.log(e);
     }
@@ -138,7 +143,7 @@ const Todo = () => {
         </button>
       </div>
       {todos
-        .filter((el) => !el.isDone)
+        .filter((el) => !el.done)
         .map((el) => (
           <TodoList
             el={el}
@@ -150,7 +155,7 @@ const Todo = () => {
         ))}
       <h1 className="text-center mt-6">Законченные дела:</h1>
       {todos
-        .filter((el) => el.isDone)
+        .filter((el) => el.done)
         .map((el) => (
           <TodoList
             updateStatus={updateStatus}
