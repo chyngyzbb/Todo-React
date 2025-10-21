@@ -5,7 +5,7 @@ import axios from "axios";
 const Todo = () => {
   const [value, setValue] = useState("");
   const [todos, setTodos] = useState([]);
-  const API = "http://localhost:8080";
+  const API = "http://localhost:8081";
 
   const getAllTasks = async () => {
     try {
